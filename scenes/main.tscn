@@ -12,3 +12,6 @@ texture = ExtResource("1_ngv75")
 
 [node name="Player" parent="." instance=ExtResource("2_uo2xd")]
 position = Vector2(216, 192)
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
