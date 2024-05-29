@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq2q760d7y3x0"]
+
+[ext_resource type="Texture2D" uid="uid://crpllv5trgqh0" path="res://assets/sprites/icon.svg" id="1_xnswd"]
+[ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="2_pds28"]
+[ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="3_tkjpm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvwej"]
+size = Vector2(128, 128)
+
+[node name="Prototype Enemy" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("1_xnswd")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("2_pds28")]
+HEALTH_DISPLAY = NodePath("../RichTextLabel")
+
+[node name="Hurtbox_Component" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_tkjpm")]
+healthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox_Component"]
+shape = SubResource("RectangleShape2D_dvwej")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -64.0
+offset_top = -88.0
+offset_right = 64.0
+offset_bottom = -64.0
+text = "Health: 100"

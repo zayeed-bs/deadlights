@@ -1,29 +1,118 @@
-[gd_scene load_steps=5 format=3 uid="uid://w3o0fx5xl05k"]
+[gd_scene load_steps=20 format=3 uid="uid://w3o0fx5xl05k"]
 
 [ext_resource type="Texture2D" uid="uid://crpllv5trgqh0" path="res://assets/sprites/icon.svg" id="1_rgcbx"]
 [ext_resource type="Script" path="res://scripts/PlayerController.gd" id="1_y0g7a"]
+[ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="3_c03py"]
+[ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="4_i6dxs"]
+[ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_ajf8o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0bxjs"]
 size = Vector2(32, 32)
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_03kfp"]
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_8eiot"]
+blend_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_rayo6"]
+blend_mode = 1
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bj15r"]
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0nww5"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ixcg5"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"is_running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w2xbe"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3bpnd"]
+advance_mode = 2
+advance_condition = &"is_shooting"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2rsn6"]
+advance_mode = 2
+advance_condition = &"is_running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oqgfv"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h6eob"]
+advance_mode = 2
+advance_condition = &"is_shooting"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_03kfp"]
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_8eiot")
+states/Idle/position = Vector2(372.5, 58.25)
+states/Run/node = SubResource("AnimationNodeBlendSpace2D_rayo6")
+states/Run/position = Vector2(666, 59)
+states/Shoot/node = SubResource("AnimationNodeBlendSpace2D_bj15r")
+states/Shoot/position = Vector2(522.5, 189.25)
+states/Start/position = Vector2(156, 67.375)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0nww5"), "Shoot", "Run", SubResource("AnimationNodeStateMachineTransition_ixcg5"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_w2xbe"), "Idle", "Shoot", SubResource("AnimationNodeStateMachineTransition_3bpnd"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_2rsn6"), "Shoot", "Idle", SubResource("AnimationNodeStateMachineTransition_oqgfv"), "Run", "Shoot", SubResource("AnimationNodeStateMachineTransition_h6eob")]
+graph_offset = Vector2(26.7, -117.405)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t0f0s"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqxe2"]
+size = Vector2(40, 10)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("meleeComponent")]
 script = ExtResource("1_y0g7a")
-SPEED = 300
+meleeComponent = NodePath("MeleeHitboxComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_rgcbx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0bxjs")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
 tree_root = SubResource("AnimationNodeStateMachine_03kfp")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_running = false
+parameters/conditions/is_shooting = false
+parameters/Idle/blend_position = Vector2(0, 0)
+parameters/Run/blend_position = Vector2(0, 0)
+parameters/Shoot/blend_position = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
 position_smoothing_enabled = true
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("3_c03py")]
+HEALTH_DISPLAY = NodePath("../RichTextLabel")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("4_i6dxs")]
+healthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_t0f0s")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="MeleeHitboxComponent" parent="." instance=ExtResource("5_ajf8o")]
+
+[node name="MeleeBox" type="CollisionShape2D" parent="MeleeHitboxComponent"]
+position = Vector2(0, -22)
+scale = Vector2(0.995335, 1.00232)
+shape = SubResource("RectangleShape2D_mqxe2")
+debug_color = Color(0.74902, 0.72549, 0, 0.419608)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -20.0
+offset_top = -37.0
+offset_right = 20.0
+offset_bottom = -27.0

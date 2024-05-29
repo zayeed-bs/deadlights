@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=4 format=3 uid="uid://cgxl2o3r2mdo8"]
 
 [ext_resource type="Texture2D" uid="uid://crpllv5trgqh0" path="res://assets/sprites/icon.svg" id="1_ngv75"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
+[ext_resource type="PackedScene" uid="uid://bq2q760d7y3x0" path="res://scenes/entities/prototype_enemy.tscn" id="3_jof8t"]
 
 [node name="World" type="Node2D"]
 
@@ -10,8 +11,12 @@ position = Vector2(240, 232)
 scale = Vector2(4.125, 4.125)
 texture = ExtResource("1_ngv75")
 
-[node name="Player" parent="." instance=ExtResource("2_uo2xd")]
-position = Vector2(216, 192)
-
 [node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(1.03843, 1.09057)
 format = 2
+
+[node name="Prototype Enemy" parent="." instance=ExtResource("3_jof8t")]
+position = Vector2(395, 177)
+
+[node name="Player" parent="." instance=ExtResource("2_uo2xd")]
+position = Vector2(224, 176)
