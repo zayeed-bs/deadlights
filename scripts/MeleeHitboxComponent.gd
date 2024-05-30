@@ -2,6 +2,7 @@ extends Area2D
 class_name MeleeHitboxComponent
 
 @export var DAMAGE := 30
+@export var ownHurtbox: HurtboxComponent
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +13,7 @@ func _ready():
 func _process(delta):
 	pass
 	
-func _on_area_entered(area):
-	if(area is HurtboxComponent):
+func _on_area_entered(area): # If a Hurtbox has been found, damage that entity
+	if(area is HurtboxComponent and area != ownHurtbox):
 		area.damage(DAMAGE)
 		

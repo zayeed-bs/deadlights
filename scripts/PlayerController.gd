@@ -12,7 +12,6 @@ func _physics_process(delta):
 	changeAnimParameters() # Change Parameters
 
 
-
 func handleMovement():
 	# Get Input
 	var xAxis = Input.get_axis("ui_left", "ui_right")
@@ -34,6 +33,8 @@ func changeAnimParameters():
 		animTree["parameters/conditions/is_running"] = false
 		animTree["parameters/conditions/is_idle"] = true
 		
-	animTree["parameters/conditions/is_shooting"] = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
-		
+	# animTree["parameters/conditions/is_shooting"] = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+	animTree["parameters/Run/blend_position"] = dir
+	animTree["parameters/Idle/blend_position"] = dir
+	
 	

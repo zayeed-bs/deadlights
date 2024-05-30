@@ -7,7 +7,7 @@
 [node name="World" type="Node2D"]
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(240, 232)
+position = Vector2(265, 265)
 scale = Vector2(4.125, 4.125)
 texture = ExtResource("1_ngv75")
 
