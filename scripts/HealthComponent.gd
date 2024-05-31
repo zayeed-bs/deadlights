@@ -3,6 +3,7 @@ class_name HealthComponent
 
 @export var MAX_HEALTH := 100
 @export var HEALTH_DISPLAY : RichTextLabel
+@export var INVINCIBLE := false
 var health: int
 
 # Called when the node enters the scene tree for the first time.
@@ -12,8 +13,9 @@ func _ready():
 
 
 func damage(dmg:int):
-	health -= dmg # U pdate Health
-	updateHealthDisplay() # Update Display
+	if !INVINCIBLE:
+		health -= dmg # U pdate Health
+		updateHealthDisplay() # Update Display
 	
 	if health <= 0: # Delete Entity if HP goes down to 0
 		get_parent().queue_free()

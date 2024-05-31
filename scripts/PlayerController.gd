@@ -9,11 +9,8 @@ var dir : Vector2
 
 func _physics_process(delta):
 	handleMovement() # For the movement
-	changeAnimParameters() # Change Parameters
-	
-	if velocity != Vector2.ZERO:
-		animTree["parameters/Run/blend_position"] = dir
-		animTree["parameters/Idle/blend_position"] = dir
+	handleAnimation() # Change Parameters
+
 
 
 func handleMovement():
@@ -29,10 +26,15 @@ func handleMovement():
 	move_and_slide()
 
 
-func changeAnimParameters():
+func handleAnimation():
 	if velocity != Vector2.ZERO: # currently moving
 		animTree["parameters/conditions/is_running"] = true
 		animTree["parameters/conditions/is_idle"] = false
+		
+		# Change blend position
+		animTree["parameters/Run/blend_position"] = dir
+		animTree["parameters/Idle/blend_position"] = dir
+		
 	else: # idle
 		animTree["parameters/conditions/is_running"] = false
 		animTree["parameters/conditions/is_idle"] = true
