@@ -20,7 +20,8 @@ config/icon="res://assets/sprites/icon.svg"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
-window/stretch/scale=4.1
+window/stretch/scale=4.0
+window/stretch/scale_mode="integer"
 
 [dotnet]
 
@@ -61,7 +62,13 @@ ui_down={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Walls"
+2d_physics/layer_2="Enemies"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 textures/lossless_compression/force_png=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

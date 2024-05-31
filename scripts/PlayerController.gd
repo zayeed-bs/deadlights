@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var meleeComponent : MeleeHitboxComponent
-@export var SPEED := 300
+@export var SPEED := 150
 var dir : Vector2
 @onready var animTree := $AnimationTree
 
@@ -10,6 +10,10 @@ var dir : Vector2
 func _physics_process(delta):
 	handleMovement() # For the movement
 	changeAnimParameters() # Change Parameters
+	
+	if velocity != Vector2.ZERO:
+		animTree["parameters/Run/blend_position"] = dir
+		animTree["parameters/Idle/blend_position"] = dir
 
 
 func handleMovement():
@@ -33,8 +37,7 @@ func changeAnimParameters():
 		animTree["parameters/conditions/is_running"] = false
 		animTree["parameters/conditions/is_idle"] = true
 		
-	# animTree["parameters/conditions/is_shooting"] = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
-	animTree["parameters/Run/blend_position"] = dir
-	animTree["parameters/Idle/blend_position"] = dir
+	#animTree["parameters/conditions/is_shooting"] = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+
 	
 	

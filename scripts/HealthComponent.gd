@@ -12,11 +12,16 @@ func _ready():
 
 
 func damage(dmg:int):
-	health -= dmg # Update Health
+	health -= dmg # U pdate Health
 	updateHealthDisplay() # Update Display
 	
 	if health <= 0: # Delete Entity if HP goes down to 0
 		get_parent().queue_free()
+
+func heal(val:int):
+	health += val
+	clamp(health, 0, MAX_HEALTH) # Clamp Health to the Max Health
+	updateHealthDisplay()
 
 func updateHealthDisplay():
 	if(HEALTH_DISPLAY):
