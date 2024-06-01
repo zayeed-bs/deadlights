@@ -27,6 +27,12 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Deadlights"
 
+[importer_defaults]
+
+animation_library={
+"animation/fps": 60.0
+}
+
 [input]
 
 ui_left={

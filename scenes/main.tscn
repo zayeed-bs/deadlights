@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=8 format=3 uid="uid://cgxl2o3r2mdo8"]
 
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
 [ext_resource type="PackedScene" uid="uid://bq2q760d7y3x0" path="res://scenes/entities/prototype_enemy.tscn" id="3_jof8t"]
+[ext_resource type="Script" path="res://scenes/GameManager.gd" id="4_pn3vs"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_40gmo"]
 
@@ -94,6 +95,21 @@ sources/0 = SubResource("TileSetAtlasSource_f66e7")
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_qhx7v")
@@ -110,6 +126,11 @@ layer_1/tile_data = PackedInt32Array(196610, 131072, 2, 262146, 131072, 3, 32768
 position = Vector2(395, 177)
 
 [node name="Player" parent="." instance=ExtResource("2_uo2xd")]
-position = Vector2(224, 176)
+position = Vector2(111, 151)
 collision_layer = 2
 SPEED = 100
+
+[node name="Game Manager" type="Node2D" parent="." node_paths=PackedStringArray("fpsLabel")]
+script = ExtResource("4_pn3vs")
+debug = true
+fpsLabel = NodePath("../CanvasLayer/Control/Label")

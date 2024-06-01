@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=3 uid="uid://w3o0fx5xl05k"]
+[gd_scene load_steps=40 format=3 uid="uid://w3o0fx5xl05k"]
 
 [ext_resource type="Script" path="res://scripts/PlayerController.gd" id="1_y0g7a"]
 [ext_resource type="Texture2D" uid="uid://dojjr7igl4ye2" path="res://assets/sprites/Walking.png" id="2_2t25g"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="3_c03py"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="4_i6dxs"]
 [ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_ajf8o"]
+[ext_resource type="Script" path="res://scripts/AttackProperties.gd" id="6_q84nw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d13sk"]
 radius = 5.0
@@ -12,6 +13,78 @@ height = 20.0
 
 [sub_resource type="Animation" id="Animation_4vuy0"]
 length = 0.001
+
+[sub_resource type="Animation" id="Animation_k6x1p"]
+resource_name = "idle_down"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [32, 33, 34, 35]
+}
+
+[sub_resource type="Animation" id="Animation_5n4iv"]
+resource_name = "idle_left"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43]
+}
+
+[sub_resource type="Animation" id="Animation_br3k6"]
+resource_name = "idle_right"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [44, 45, 46, 47]
+}
+
+[sub_resource type="Animation" id="Animation_ugyjb"]
+resource_name = "idle_up"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39]
+}
 
 [sub_resource type="Animation" id="Animation_cfjnu"]
 resource_name = "walk_down"
@@ -79,78 +152,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_k6x1p"]
-resource_name = "idle_down"
-length = 0.8
-loop_mode = 1
-step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [32, 33, 34, 35]
-}
-
-[sub_resource type="Animation" id="Animation_ugyjb"]
-resource_name = "idle_up"
-length = 0.8
-loop_mode = 1
-step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [36, 37, 38, 39]
-}
-
-[sub_resource type="Animation" id="Animation_5n4iv"]
-resource_name = "idle_left"
-length = 0.8
-loop_mode = 1
-step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [40, 41, 42, 43]
-}
-
-[sub_resource type="Animation" id="Animation_br3k6"]
-resource_name = "idle_right"
-length = 0.8
-loop_mode = 1
-step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [44, 45, 46, 47]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_23cnq"]
@@ -315,7 +316,8 @@ position_smoothing_enabled = true
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("3_c03py")]
 HEALTH_DISPLAY = NodePath("../Control/RichTextLabel")
 
-[node name="MeleeHitboxComponent" parent="." node_paths=PackedStringArray("ownHurtbox") instance=ExtResource("5_ajf8o")]
+[node name="MeleeHitboxComponent" parent="." node_paths=PackedStringArray("attackProp", "ownHurtbox") instance=ExtResource("5_ajf8o")]
+attackProp = NodePath("../AttackProperties")
 ownHurtbox = NodePath("../HurtboxComponent")
 
 [node name="MeleeBox" type="CollisionShape2D" parent="MeleeHitboxComponent"]
@@ -348,3 +350,7 @@ offset_bottom = -27.0
 theme_override_font_sizes/normal_font_size = 6
 text = "health 2023"
 metadata/_edit_use_anchors_ = true
+
+[node name="AttackProperties" type="Node2D" parent="."]
+script = ExtResource("6_q84nw")
+raw_damage = 40

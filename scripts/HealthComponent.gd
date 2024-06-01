@@ -12,9 +12,9 @@ func _ready():
 	updateHealthDisplay() # Set Initial Health Text
 
 
-func damage(dmg:int):
+func damage(dmg:Attack):
 	if !INVINCIBLE:
-		health -= dmg # U pdate Health
+		health -= dmg.raw_damage # U pdate Health
 		updateHealthDisplay() # Update Display
 	
 	if health <= 0: # Delete Entity if HP goes down to 0
