@@ -10,7 +10,7 @@ enum {
 var player
 var state = IDLE
 var rng = RandomNumberGenerator.new()
-@onready var attackTimer  = $ChaseRange/Timer
+@onready var attackTimer  = $AttackRange/Timer
 
 
 func _ready():
@@ -50,7 +50,7 @@ func _on_chase_range_area_entered(area):
 	if(area != $HurtboxComponent && area is HurtboxComponent):
 		player = area # attach player
 		state = CHASE # change state
-		attackTimer.start(1.5) # change state to attack after player has been in there for a while
+
 
 
 func _on_chase_range_area_exited(area):
@@ -62,3 +62,13 @@ func _on_chase_range_area_exited(area):
 
 func _on_timer_timeout():
 	state = ATTACK # Replace with function body.
+
+
+func _on_attack_range_area_entered(area):
+	if area == player:
+		attackTimer.start(0.5) # change state to attack after player has been in there for a while
+
+
+func _on_attack_range_area_exited(area):
+	if area == player:
+		attackTimer.stop() # change state to attack after player has been in there for a while.

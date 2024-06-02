@@ -15,6 +15,10 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/sprites/icon.svg"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+
 [display]
 
 window/size/viewport_width=1920
@@ -26,6 +30,10 @@ window/stretch/scale_mode="integer"
 [dotnet]
 
 project/assembly_name="Deadlights"
+
+[gui]
+
+theme/custom_font="res://assets/Silver.ttf"
 
 [importer_defaults]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://w3o0fx5xl05k"]
+[gd_scene load_steps=41 format=3 uid="uid://w3o0fx5xl05k"]
 
 [ext_resource type="Script" path="res://scripts/PlayerController.gd" id="1_y0g7a"]
 [ext_resource type="Texture2D" uid="uid://dojjr7igl4ye2" path="res://assets/sprites/Walking.png" id="2_2t25g"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="3_c03py"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="4_i6dxs"]
 [ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_ajf8o"]
+[ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="6_lqf0h"]
 [ext_resource type="Script" path="res://scripts/AttackProperties.gd" id="6_q84nw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d13sk"]
@@ -268,7 +269,7 @@ graph_offset = Vector2(202.86, -21.0826)
 size = Vector2(16.075, 7.49421)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t4dp"]
-size = Vector2(28, 41)
+size = Vector2(22, 41)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("meleeComponent")]
 z_index = 1
@@ -282,7 +283,7 @@ y_sort_enabled = true
 texture = ExtResource("2_2t25g")
 hframes = 7
 vframes = 7
-frame = 41
+frame = 40
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 17)
@@ -314,7 +315,7 @@ ignore_rotation = false
 position_smoothing_enabled = true
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("3_c03py")]
-HEALTH_DISPLAY = NodePath("../Control/RichTextLabel")
+HEALTH_DISPLAY = NodePath("../Control/Label")
 
 [node name="MeleeHitboxComponent" parent="." node_paths=PackedStringArray("attackProp", "ownHurtbox") instance=ExtResource("5_ajf8o")]
 attackProp = NodePath("../AttackProperties")
@@ -330,7 +331,6 @@ debug_color = Color(0.74902, 0.72549, 0, 0.419608)
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_3t4dp")
 debug_color = Color(1, 0, 0, 0.0980392)
 
@@ -339,17 +339,25 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("6_lqf0h")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+[node name="Label" type="Label" parent="Control"]
 z_index = 99
-layout_mode = 0
-offset_left = -28.0
-offset_top = -37.0
-offset_right = 28.0
-offset_bottom = -27.0
-theme_override_font_sizes/normal_font_size = 6
-text = "health 2023"
-metadata/_edit_use_anchors_ = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.375
+anchor_right = 0.35
+anchor_bottom = 0.125
+offset_left = -27.0
+offset_top = -42.0
+offset_right = 29.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 19
+text = "health: 50"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AttackProperties" type="Node2D" parent="."]
 script = ExtResource("6_q84nw")

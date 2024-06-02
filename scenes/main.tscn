@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=9 format=3 uid="uid://cgxl2o3r2mdo8"]
 
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
+[ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="1_ro65w"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
 [ext_resource type="PackedScene" uid="uid://bq2q760d7y3x0" path="res://scenes/entities/prototype_enemy.tscn" id="3_jof8t"]
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="4_pn3vs"]
@@ -105,6 +106,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+theme = ExtResource("1_ro65w")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0

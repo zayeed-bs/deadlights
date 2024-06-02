@@ -2,7 +2,7 @@ extends Node
 class_name HealthComponent
 
 @export var MAX_HEALTH := 100
-@export var HEALTH_DISPLAY : RichTextLabel
+@export var HEALTH_DISPLAY : Label
 @export var INVINCIBLE := false
 var health: int
 
@@ -27,4 +27,4 @@ func heal(val:int):
 
 func updateHealthDisplay():
 	if(HEALTH_DISPLAY):
-		HEALTH_DISPLAY.text = "Health: " + str(health)
+		HEALTH_DISPLAY.set_text("Health: " + str(health))

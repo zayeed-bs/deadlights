@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bq2q760d7y3x0"]
+[gd_scene load_steps=12 format=3 uid="uid://bq2q760d7y3x0"]
 
 [ext_resource type="Script" path="res://scripts/PrototypeEnemyHandler.gd" id="1_5bd6b"]
 [ext_resource type="Texture2D" uid="uid://crpllv5trgqh0" path="res://assets/sprites/icon.svg" id="1_xnswd"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="2_pds28"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="3_tkjpm"]
 [ext_resource type="Script" path="res://scripts/EnemyAttackHandler.gd" id="4_fd8j4"]
+[ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="5_ip4yl"]
 [ext_resource type="Script" path="res://scripts/EnemyAttackProperties.gd" id="5_y4lck"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvwej"]
@@ -15,7 +16,10 @@ radius = 12.0
 height = 66.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b0ygj"]
-radius = 147.868
+radius = 95.0474
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_883n2"]
+radius = 75.0
 
 [node name="Prototype Enemy" type="CharacterBody2D"]
 position = Vector2(19, -50)
@@ -27,7 +31,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_xnswd")
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("2_pds28")]
-HEALTH_DISPLAY = NodePath("../RichTextLabel")
+HEALTH_DISPLAY = NodePath("../Label")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_tkjpm")]
 healthComponent = NodePath("../HealthComponent")
@@ -37,12 +41,16 @@ position = Vector2(-19, 19)
 shape = SubResource("RectangleShape2D_dvwej")
 debug_color = Color(0.976471, 0, 0.407843, 0.419608)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Label" type="Label" parent="."]
 offset_left = -83.0
 offset_top = -44.0
 offset_right = 45.0
 offset_bottom = -20.0
+theme = ExtResource("5_ip4yl")
+theme_override_font_sizes/font_size = 19
 text = "Health: 100"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AttackHandler" type="Node2D" parent="."]
 script = ExtResource("4_fd8j4")
@@ -61,9 +69,18 @@ shape = SubResource("CapsuleShape2D_irhr5")
 position = Vector2(-19, 19)
 shape = SubResource("CircleShape2D_b0ygj")
 
-[node name="Timer" type="Timer" parent="ChaseRange"]
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+position = Vector2(-19, 19)
+shape = SubResource("CircleShape2D_883n2")
+debug_color = Color(0.65098, 0.517647, 0, 0.419608)
+
+[node name="Timer" type="Timer" parent="AttackRange"]
 wait_time = 1.5
 
 [connection signal="area_entered" from="ChaseRange" to="." method="_on_chase_range_area_entered"]
 [connection signal="area_exited" from="ChaseRange" to="." method="_on_chase_range_area_exited"]
-[connection signal="timeout" from="ChaseRange/Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="AttackRange" to="." method="_on_attack_range_area_entered"]
+[connection signal="area_exited" from="AttackRange" to="." method="_on_attack_range_area_exited"]
+[connection signal="timeout" from="AttackRange/Timer" to="." method="_on_timer_timeout"]

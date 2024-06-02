@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dviku8twa1nni"]
+
+[ext_resource type="FontFile" uid="uid://bi8b6t2tri26y" path="res://assets/Silver.ttf" id="1_6441c"]
+
+[resource]
+default_font = ExtResource("1_6441c")
