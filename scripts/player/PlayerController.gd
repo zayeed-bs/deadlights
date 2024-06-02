@@ -6,6 +6,7 @@ var dir : Vector2
 @onready var animTree := $AnimationTree
 
 var attack_float : float
+var in_lock_on_range := true
 
 
 func _physics_process(delta):
@@ -46,7 +47,7 @@ func handleCombat(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		attack_float += delta
 	else:
-		if attack_float > 1.5:
+		if attack_float > 0.7:
 			# Implement Secondary (Not Unlocked when beginning)
 			print("Heavy Attack")
 		elif attack_float > 0:

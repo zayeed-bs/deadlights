@@ -32,6 +32,7 @@ texture = ExtResource("1_xnswd")
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_DISPLAY") instance=ExtResource("2_pds28")]
 HEALTH_DISPLAY = NodePath("../Label")
+INVINCIBLE = true
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_tkjpm")]
 healthComponent = NodePath("../HealthComponent")
