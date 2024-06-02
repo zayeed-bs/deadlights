@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqbdchtwt11l3"]
+
+[ext_resource type="Texture2D" uid="uid://dg05r405nhlcj" path="res://assets/sprites/environment/barrel.png" id="1_rj0jf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5g0bo"]
+radius = 4.0
+height = 20.0
+
+[node name="Barrel" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -10)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rj0jf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.84217e-14, 10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5g0bo")

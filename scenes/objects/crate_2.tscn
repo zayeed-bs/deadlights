@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://81hireu2occf"]
+
+[ext_resource type="Texture2D" uid="uid://cahds52o4dyek" path="res://assets/sprites/environment/Crate_2.png" id="1_pw0wf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_poppq"]
+radius = 5.0
+height = 26.0
+
+[node name="Crate_2" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -9)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pw0wf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_poppq")

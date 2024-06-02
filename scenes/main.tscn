@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=12 format=3 uid="uid://cgxl2o3r2mdo8"]
 
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="1_ro65w"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
 [ext_resource type="PackedScene" uid="uid://bq2q760d7y3x0" path="res://scenes/entities/prototype_enemy.tscn" id="3_jof8t"]
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="4_pn3vs"]
+[ext_resource type="PackedScene" uid="uid://bqbdchtwt11l3" path="res://scenes/objects/barrel.tscn" id="6_55dor"]
+[ext_resource type="PackedScene" uid="uid://cmu6sliqmipqd" path="res://scenes/objects/crate.tscn" id="7_b2g2u"]
+[ext_resource type="PackedScene" uid="uid://81hireu2occf" path="res://scenes/objects/crate_2.tscn" id="8_m55df"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_40gmo"]
 
@@ -103,6 +106,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 2.0
+offset_right = -5.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -110,8 +117,10 @@ theme = ExtResource("1_ro65w")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 6.0
+offset_top = -2.0
+offset_right = 46.0
+offset_bottom = 21.0
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -137,3 +146,24 @@ SPEED = 100
 script = ExtResource("4_pn3vs")
 debug = true
 fpsLabel = NodePath("../CanvasLayer/Control/Label")
+
+[node name="Environment" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Barrel" parent="Environment" instance=ExtResource("6_55dor")]
+position = Vector2(147, 60)
+
+[node name="Barrel2" parent="Environment" instance=ExtResource("6_55dor")]
+position = Vector2(174, 60)
+
+[node name="Crate" parent="Environment" instance=ExtResource("7_b2g2u")]
+position = Vector2(14, 61)
+
+[node name="Crate2" parent="Environment" instance=ExtResource("7_b2g2u")]
+position = Vector2(38, 61)
+
+[node name="Crate_2" parent="Environment" instance=ExtResource("8_m55df")]
+position = Vector2(62, 61)
+
+[node name="Crate_3" parent="Environment" instance=ExtResource("8_m55df")]
+position = Vector2(86, 61)
