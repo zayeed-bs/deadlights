@@ -5,11 +5,13 @@ extends CharacterBody2D
 var dir : Vector2
 @onready var animTree := $AnimationTree
 
+var attack_float : float
 
 
 func _physics_process(delta):
 	handleMovement() # For the movement
 	handleAnimation() # Change Parameters
+	handleCombat(delta) # For Attacks
 
 
 
@@ -38,8 +40,19 @@ func handleAnimation():
 	else: # idle
 		animTree["parameters/conditions/is_running"] = false
 		animTree["parameters/conditions/is_idle"] = true
-		
-	#animTree["parameters/conditions/is_shooting"] = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 
 	
-	
+func handleCombat(delta):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		attack_float += delta
+	else:
+		if attack_float > 1.5:
+			# Implement Secondary (Not Unlocked when beginning)
+			print("Heavy Attack")
+		elif attack_float > 0:
+			# Implement Primary
+			print("Light Attack")
+		
+		attack_float = 0
+		
+	$"Control/Mouse Button held down".set_text(str(attack_float))
