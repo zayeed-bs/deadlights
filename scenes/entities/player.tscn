@@ -1,12 +1,12 @@
 [gd_scene load_steps=41 format=3 uid="uid://w3o0fx5xl05k"]
 
-[ext_resource type="Script" path="res://scripts/PlayerController.gd" id="1_y0g7a"]
+[ext_resource type="Script" path="res://scripts/Component/PlayerController.gd" id="1_y0g7a"]
 [ext_resource type="Texture2D" uid="uid://dojjr7igl4ye2" path="res://assets/sprites/Walking.png" id="2_2t25g"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="3_c03py"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="4_i6dxs"]
 [ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_ajf8o"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="6_lqf0h"]
-[ext_resource type="Script" path="res://scripts/AttackProperties.gd" id="6_q84nw"]
+[ext_resource type="Script" path="res://scripts/Component/AttackProperties.gd" id="6_q84nw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d13sk"]
 radius = 5.0
@@ -283,7 +283,7 @@ y_sort_enabled = true
 texture = ExtResource("2_2t25g")
 hframes = 7
 vframes = 7
-frame = 40
+frame = 42
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 17)

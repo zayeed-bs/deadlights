@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cf067ptrs41hh"]
 
-[ext_resource type="Script" path="res://scripts/MeleeHitboxComponent.gd" id="1_y7wxd"]
+[ext_resource type="Script" path="res://scripts/Component/MeleeHitboxComponent.gd" id="1_y7wxd"]
 
 [node name="MeleeHitboxComponent" type="Area2D"]
 script = ExtResource("1_y7wxd")
