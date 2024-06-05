@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://1k57isrv10v0"]
+
+[ext_resource type="Texture2D" uid="uid://bjc4gdbdwuso3" path="res://assets/sprites/environment/lamp_post.png" id="1_ixvpr"]
+
+[sub_resource type="Gradient" id="Gradient_26vkh"]
+offsets = PackedFloat32Array(0, 0.743546)
+colors = PackedColorArray(0.984314, 0.913725, 0.372549, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fc05h"]
+gradient = SubResource("Gradient_26vkh")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_opel1"]
+radius = 8.0
+height = 18.0
+
+[node name="Lamp Post" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -25)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_ixvpr")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(14, -13)
+texture = SubResource("GradientTexture2D_fc05h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
+shape = SubResource("CapsuleShape2D_opel1")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=17 format=3 uid="uid://cgxl2o3r2mdo8"]
 
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="1_ro65w"]
@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bqbdchtwt11l3" path="res://scenes/objects/barrel.tscn" id="6_55dor"]
 [ext_resource type="PackedScene" uid="uid://cmu6sliqmipqd" path="res://scenes/objects/crate.tscn" id="7_b2g2u"]
 [ext_resource type="PackedScene" uid="uid://81hireu2occf" path="res://scenes/objects/crate_2.tscn" id="8_m55df"]
+[ext_resource type="PackedScene" uid="uid://dlcobjof0mx87" path="res://scenes/objects/post_1.tscn" id="9_a45ft"]
+[ext_resource type="PackedScene" uid="uid://djc0nkmqufdlk" path="res://scenes/objects/post_2.tscn" id="10_suou8"]
+[ext_resource type="PackedScene" uid="uid://d2s80ra7nwxvt" path="res://scenes/objects/barrel_and_crate.tscn" id="11_3nee2"]
+[ext_resource type="PackedScene" uid="uid://1k57isrv10v0" path="res://scenes/objects/lamp_post.tscn" id="12_056rr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_40gmo"]
 
@@ -96,6 +100,9 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_40gmo")
 sources/0 = SubResource("TileSetAtlasSource_f66e7")
 
+[sub_resource type="Environment" id="Environment_we64p"]
+glow_bloom = 0.48
+
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
@@ -132,7 +139,7 @@ layer_0/tile_data = PackedInt32Array(393218, 0, 2, 393219, 0, 2, 393220, 0, 2, 2
 layer_1/name = "Objects"
 layer_1/y_sort_enabled = true
 layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array(196610, 131072, 2, 262146, 131072, 3, 327682, 131072, 2, 393218, 131072, 3, 327684, 131072, 2, 393220, 131072, 3, 196612, 131072, 2, 262148, 131072, 3)
+layer_1/tile_data = PackedInt32Array()
 
 [node name="Prototype Enemy" parent="." instance=ExtResource("3_jof8t")]
 position = Vector2(395, 177)
@@ -167,3 +174,22 @@ position = Vector2(62, 61)
 
 [node name="Crate_3" parent="Environment" instance=ExtResource("8_m55df")]
 position = Vector2(86, 61)
+
+[node name="Post1" parent="Environment" instance=ExtResource("9_a45ft")]
+position = Vector2(79, 111)
+
+[node name="Barrel and Crate" parent="Environment" instance=ExtResource("11_3nee2")]
+position = Vector2(209, 61)
+
+[node name="Lamp Post" parent="Environment" instance=ExtResource("12_056rr")]
+position = Vector2(79, 200)
+
+[node name="Post2" parent="Environment" instance=ExtResource("10_suou8")]
+position = Vector2(150, 207)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_we64p")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.4
+blend_mode = 1

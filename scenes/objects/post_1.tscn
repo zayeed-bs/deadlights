@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlcobjof0mx87"]
+
+[ext_resource type="Texture2D" uid="uid://c7ayrympv8bi8" path="res://assets/sprites/environment/post_1.png" id="1_07kuy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3asit"]
+radius = 4.0
+height = 16.0
+
+[node name="Post1" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -13)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_07kuy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
+shape = SubResource("CapsuleShape2D_3asit")

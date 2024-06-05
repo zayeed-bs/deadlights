@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2s80ra7nwxvt"]
+
+[ext_resource type="Texture2D" uid="uid://brut1ylc2yo8f" path="res://assets/sprites/environment/barrel_and_box.png" id="1_kkf35"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xh14l"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u5ewc"]
+radius = 6.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0f2bq"]
+
+[node name="Barrel and Crate" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kkf35")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 9)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xh14l")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 9)
+shape = SubResource("CircleShape2D_u5ewc")
+
+[node name="AdventureBeginsDemo" type="Sprite2D" parent="."]
+position = Vector2(6, 15)
+texture = SubResource("CompressedTexture2D_0f2bq")
