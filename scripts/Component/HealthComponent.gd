@@ -27,4 +27,5 @@ func heal(val:int):
 
 func updateHealthDisplay():
 	if(HEALTH_DISPLAY):
-		HEALTH_DISPLAY.set_text("Health: " + str(health))
+		pass
+		#HEALTH_DISPLAY.set_text("Health: " + str(health))

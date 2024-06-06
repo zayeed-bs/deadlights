@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 @export var raw_damage := 100
 @export var piercing := false

@@ -141,9 +141,6 @@ layer_1/y_sort_enabled = true
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 
-[node name="Prototype Enemy" parent="." instance=ExtResource("3_jof8t")]
-position = Vector2(395, 177)
-
 [node name="Player" parent="." instance=ExtResource("2_uo2xd")]
 position = Vector2(111, 151)
 collision_layer = 2
@@ -182,10 +179,10 @@ position = Vector2(79, 111)
 position = Vector2(209, 61)
 
 [node name="Lamp Post" parent="Environment" instance=ExtResource("12_056rr")]
-position = Vector2(79, 200)
+position = Vector2(80, 208)
 
 [node name="Post2" parent="Environment" instance=ExtResource("10_suou8")]
-position = Vector2(150, 207)
+position = Vector2(152, 216)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_we64p")
@@ -193,3 +190,6 @@ environment = SubResource("Environment_we64p")
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 energy = 0.4
 blend_mode = 1
+
+[node name="Prototype Enemy" parent="." instance=ExtResource("3_jof8t")]
+position = Vector2(40, 120)
