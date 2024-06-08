@@ -2,9 +2,16 @@ extends CanvasModulate
 
 @export var colorGradient : GradientTexture1D
 @export var totalDurationPerDayInSeconds : int = 600
+@export var lightFadeDurationInSeconds : float = 5.0
 var time : float = 0.00
 var lightsOn : bool = true
 @onready var lights : Array[Node] = get_tree().get_nodes_in_group("EnvironmentLights")
+
+func _ready():
+	if lightsOn: # Turn off
+		for light in lights:
+			light.energy = 0
+			lightsOn = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -20,13 +27,17 @@ func _process(delta):
 	
 	# Switch the lights // Uses toggle for efficiency
 	if(val >= 0.6):
-		if lightsOn:
+		if lightsOn: # Turn off
 			for light in lights:
-				light.energy = 0
 				lightsOn = false
+				
+				# Fade out the lights
+				var tween = get_tree().create_tween()
+				tween.tween_property(light, "energy", 0, 5)
 	else:
-		if !lightsOn:
+		if !lightsOn: # Turn on
 			for light in lights:
-				light.energy = 1
+				var tween = get_tree().create_tween()
+				tween.tween_property(light, "energy", 1, 5)
 				lightsOn = true
 
