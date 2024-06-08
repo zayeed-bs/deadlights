@@ -4,7 +4,10 @@ class_name HealthComponent
 @export var MAX_HEALTH := 100
 @export var HEALTH_DISPLAY : Label
 @export var INVINCIBLE := false
+@export var DAMAGE_COOLDOWN := 0.5
 var health: int
+
+@onready var timer = $Timer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,11 +17,14 @@ func _ready():
 
 func damage(dmg:Attack):
 	if !INVINCIBLE:
-		health -= dmg.raw_damage # U pdate Health
+		health -= dmg.raw_damage # Update Health
 		updateHealthDisplay() # Update Display
 	
 	if health <= 0: # Delete Entity if HP goes down to 0
 		get_parent().queue_free()
+	else:
+		INVINCIBLE = true
+		timer.start(DAMAGE_COOLDOWN)
 
 func heal(val:int):
 	health += val
@@ -27,5 +33,8 @@ func heal(val:int):
 
 func updateHealthDisplay():
 	if(HEALTH_DISPLAY):
-		pass
-		#HEALTH_DISPLAY.set_text("Health: " + str(health))
+		HEALTH_DISPLAY.set_text("Health: " + str(health))
+
+
+func _on_timer_timeout():
+	INVINCIBLE = false

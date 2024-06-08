@@ -1,10 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://bq2q760d7y3x0"]
+[gd_scene load_steps=39 format=3 uid="uid://bq2q760d7y3x0"]
 
 [ext_resource type="Script" path="res://scripts/enemy/PrototypeEnemyHandler.gd" id="1_5bd6b"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="2_pds28"]
-[ext_resource type="Texture2D" uid="uid://dpjivy55fa0wh" path="res://assets/sprites/characters/Walking.png" id="2_xuok0"]
+[ext_resource type="Texture2D" uid="uid://c05rdis8bhow5" path="res://assets/sprites/characters/Walking.png" id="2_xuok0"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="3_tkjpm"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="5_ip4yl"]
+[ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_manaf"]
 [ext_resource type="Script" path="res://scripts/enemy/EnemyAttackProperties.gd" id="5_y4lck"]
 
 [sub_resource type="Animation" id="Animation_rh402"]
@@ -21,11 +22,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [32]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeHitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_hymb7"]
 resource_name = "attack_right"
-length = 0.8
-step = 0.2
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,10 +45,22 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [48, 49, 50, 51]
+"values": [48, 49, 50, 51, 52, 53, 54, 55, 57]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeHitboxComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_exyyr"]
@@ -217,11 +241,14 @@ graph_offset = Vector2(-6, -6)
 radius = 4.0
 height = 20.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xb8os"]
+size = Vector2(30, 39)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvwej"]
 size = Vector2(26, 47.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b0ygj"]
-radius = 91.444
+radius = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_883n2"]
 radius = 37.0135
@@ -229,15 +256,15 @@ radius = 37.0135
 [node name="Prototype Enemy" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(19, -37)
+position = Vector2(0, -1)
 script = ExtResource("1_5bd6b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(-19, 17)
+position = Vector2(0, -20)
 texture = ExtResource("2_xuok0")
 hframes = 8
-vframes = 7
+vframes = 8
 frame = 32
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -259,7 +286,6 @@ parameters/Idle/blend_position = Vector2(2.08165e-12, 2.08165e-12)
 parameters/Run/blend_position = Vector2(0, 0)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
-position = Vector2(-19, 37)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_irhr5")
 
@@ -269,26 +295,40 @@ INVINCIBLE = true
 
 [node name="AttackProp" type="Node" parent="."]
 script = ExtResource("5_y4lck")
+raw_damage = 10
+piercing = null
+high_guard_mult = null
+slash_mult = null
+
+[node name="MeleeHitboxComponent" parent="." node_paths=PackedStringArray("attackProp", "ownHurtbox") instance=ExtResource("5_manaf")]
+position = Vector2(-1, -21)
+attackProp = NodePath("../AttackProp")
+ownHurtbox = NodePath("../HurtboxComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHitboxComponent"]
+position = Vector2(34, 1.5)
+shape = SubResource("RectangleShape2D_xb8os")
+disabled = true
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_tkjpm")]
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-position = Vector2(-19, 17.75)
+position = Vector2(0, -19)
 shape = SubResource("RectangleShape2D_dvwej")
 debug_color = Color(0.980392, 0, 0, 0.0627451)
 
 [node name="ChaseRange" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseRange"]
-position = Vector2(-19, 18)
+position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_b0ygj")
 debug_color = Color(0, 0.6, 0.701961, 0.184314)
 
 [node name="AttackRange" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
-position = Vector2(-19, 17)
+position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_883n2")
 debug_color = Color(0.65098, 0.517647, 0, 0.419608)
 
@@ -297,10 +337,10 @@ wait_time = 1.5
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
-offset_left = -83.0
-offset_top = -29.0
-offset_right = 45.0
-offset_bottom = -5.0
+offset_left = -64.0
+offset_top = -66.0
+offset_right = 64.0
+offset_bottom = -42.0
 theme = ExtResource("5_ip4yl")
 theme_override_font_sizes/font_size = 19
 text = "Health: 100"

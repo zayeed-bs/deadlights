@@ -5,3 +5,4 @@ class_name HurtboxComponent
 
 func damage(dmg:Attack):
 	healthComponent.damage(dmg)
+

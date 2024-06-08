@@ -1,7 +1,7 @@
 [gd_scene load_steps=41 format=3 uid="uid://w3o0fx5xl05k"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_y0g7a"]
-[ext_resource type="Texture2D" uid="uid://dpjivy55fa0wh" path="res://assets/sprites/characters/Walking.png" id="2_2t25g"]
+[ext_resource type="Texture2D" uid="uid://c05rdis8bhow5" path="res://assets/sprites/characters/Walking.png" id="2_2t25g"]
 [ext_resource type="PackedScene" uid="uid://sptpr245t6te" path="res://scenes/components/health_component.tscn" id="3_c03py"]
 [ext_resource type="PackedScene" uid="uid://btc4hd1w6h68d" path="res://scenes/components/hurtbox_component.tscn" id="4_i6dxs"]
 [ext_resource type="PackedScene" uid="uid://cf067ptrs41hh" path="res://scenes/components/melee_hitbox_component.tscn" id="5_ajf8o"]
@@ -282,8 +282,8 @@ meleeComponent = NodePath("MeleeHitboxComponent")
 y_sort_enabled = true
 texture = ExtResource("2_2t25g")
 hframes = 8
-vframes = 7
-frame = 40
+vframes = 8
+frame = 42
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 17)
@@ -326,6 +326,7 @@ ownHurtbox = NodePath("../HurtboxComponent")
 position = Vector2(0, -21)
 scale = Vector2(0.995335, 1.00232)
 shape = SubResource("RectangleShape2D_fscfe")
+disabled = true
 debug_color = Color(0.74902, 0.72549, 0, 0.419608)
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("4_i6dxs")]

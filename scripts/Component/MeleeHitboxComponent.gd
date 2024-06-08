@@ -1,7 +1,6 @@
 extends Area2D
 class_name MeleeHitboxComponent
 
-@export var DAMAGE := 30
 @export var attackProp : Attack
 @export var ownHurtbox: HurtboxComponent
 

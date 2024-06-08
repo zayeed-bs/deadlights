@@ -20,16 +20,14 @@ height = 18.0
 [node name="Lamp Post" type="StaticBody2D"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(0, -25)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, -23)
 texture = ExtResource("1_ixvpr")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(14, -13)
+[node name="PointLight2D" type="PointLight2D" parent="." groups=["EnvironmentLights"]]
+position = Vector2(14, -37)
 texture = SubResource("GradientTexture2D_fc05h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 24)
 shape = SubResource("CapsuleShape2D_opel1")

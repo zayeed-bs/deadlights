@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://cgxl2o3r2mdo8"]
+[gd_scene load_steps=22 format=3 uid="uid://cgxl2o3r2mdo8"]
 
+[ext_resource type="Script" path="res://scenes/DayNightCycle.gd" id="1_8e8nh"]
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="1_ro65w"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
@@ -12,6 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://djc0nkmqufdlk" path="res://scenes/objects/post_2.tscn" id="10_suou8"]
 [ext_resource type="PackedScene" uid="uid://d2s80ra7nwxvt" path="res://scenes/objects/barrel_and_crate.tscn" id="11_3nee2"]
 [ext_resource type="PackedScene" uid="uid://1k57isrv10v0" path="res://scenes/objects/lamp_post.tscn" id="12_056rr"]
+
+[sub_resource type="Gradient" id="Gradient_33qni"]
+offsets = PackedFloat32Array(0, 0.4, 0.5, 0.6, 1)
+colors = PackedColorArray(0.207843, 0.360784, 0.490196, 1, 0.423529, 0.356863, 0.482353, 1, 0.752941, 0.423529, 0.517647, 1, 0.972549, 0.694118, 0.584314, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ffr0e"]
+gradient = SubResource("Gradient_33qni")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_40gmo"]
 
@@ -100,15 +108,29 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_40gmo")
 sources/0 = SubResource("TileSetAtlasSource_f66e7")
 
-[sub_resource type="Environment" id="Environment_we64p"]
-glow_bloom = 0.48
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7xrks"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_gkjru"]
+offsets = PackedFloat32Array(0, 0.646688)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w5li6"]
+gradient = SubResource("Gradient_gkjru")
+fill = 1
+fill_from = Vector2(0.47191, 0.496629)
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.792157, 0.760784, 1, 1)
+script = ExtResource("1_8e8nh")
+colorGradient = SubResource("GradientTexture1D_ffr0e")
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasModulate"]
+
+[node name="Control" type="Control" parent="CanvasModulate/CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +144,7 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ro65w")
 
-[node name="Label" type="Label" parent="CanvasLayer/Control"]
+[node name="Label" type="Label" parent="CanvasModulate/CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = -2.0
@@ -149,7 +171,7 @@ SPEED = 100
 [node name="Game Manager" type="Node2D" parent="." node_paths=PackedStringArray("fpsLabel")]
 script = ExtResource("4_pn3vs")
 debug = true
-fpsLabel = NodePath("../CanvasLayer/Control/Label")
+fpsLabel = NodePath("../CanvasModulate/CanvasLayer/Control/Label")
 
 [node name="Environment" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -184,12 +206,12 @@ position = Vector2(80, 208)
 [node name="Post2" parent="Environment" instance=ExtResource("10_suou8")]
 position = Vector2(152, 216)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_we64p")
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-energy = 0.4
-blend_mode = 1
-
 [node name="Prototype Enemy" parent="." instance=ExtResource("3_jof8t")]
-position = Vector2(40, 120)
+position = Vector2(-152, 112)
+
+[node name="PointLight2D" type="PointLight2D" parent="." groups=["EnvironmentLights"]]
+material = SubResource("CanvasItemMaterial_7xrks")
+position = Vector2(224, 112)
+scale = Vector2(1.1875, 1.1875)
+energy = 0.4
+texture = SubResource("GradientTexture2D_w5li6")

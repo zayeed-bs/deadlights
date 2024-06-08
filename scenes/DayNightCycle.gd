@@ -1,0 +1,32 @@
+extends CanvasModulate
+
+@export var colorGradient : GradientTexture1D
+@export var totalDurationPerDayInSeconds : int = 600
+var time : float = 0.00
+var lightsOn : bool = true
+@onready var lights : Array[Node] = get_tree().get_nodes_in_group("EnvironmentLights")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	time += delta
+	
+	# a * sinbx + c
+	# amplitude -> 1
+	# +1.0 /2.0 to shift into range (0->1)
+	# +0.5pi so it starts at midday
+	# (2*PI)/totalDurationPerDayInSeconds to match duration
+	var val = (sin((2*PI)/totalDurationPerDayInSeconds*time + 0.5 * PI) + 1.0) / 2.0
+	color = colorGradient.gradient.sample(val) # 1.0 is full day, 0.0 is full night
+	
+	# Switch the lights // Uses toggle for efficiency
+	if(val >= 0.6):
+		if lightsOn:
+			for light in lights:
+				light.energy = 0
+				lightsOn = false
+	else:
+		if !lightsOn:
+			for light in lights:
+				light.energy = 1
+				lightsOn = true
+

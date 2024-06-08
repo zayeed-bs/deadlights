@@ -25,7 +25,6 @@ func _physics_process(delta):
 	match state:
 		IDLE:
 			idle()
-			pass
 		CHASE:
 			chase()
 		ATTACK:
@@ -34,8 +33,6 @@ func _physics_process(delta):
 	animTree["parameters/Idle/blend_position"] = dir
 	animTree["parameters/Run/blend_position"] = dir
 	animTree["parameters/Attack/blend_position"] = dir
-	
-	debugLabel.set_text(str(attackTimer.time_left))
 
 func idle():
 	# TO DO THIS DOES NOT WORK
@@ -45,7 +42,7 @@ func idle():
 	
 
 func chase():
-	if player:
+	if player != null:
 		dir = global_position.direction_to(player.global_position).normalized()
 		velocity = dir * SPEED
 	move_and_slide()
@@ -69,13 +66,13 @@ func _on_chase_range_area_entered(area):
 		player = area # attach player
 		state = CHASE # change state
 
-
-
-func _on_chase_range_area_exited(area):
-	if(area != hurtBox && area is HurtboxComponent):
-		player = null # detach player
-		state = IDLE # change state to idle
-
+#
+#
+#func _on_chase_range_area_exited(area):
+	#if(area != hurtBox && area is HurtboxComponent):
+		#player = null # detach player
+		#state = IDLE # change state to idle
+#
 
 
 func _on_timer_timeout():
@@ -84,7 +81,8 @@ func _on_timer_timeout():
 
 func _on_attack_range_area_entered(area):
 	if area == player:
-		attackTimer.start(1.5) # change state to attack after player has been in there for a while
+		state = IDLE
+		attackTimer.start(0.5) # change state to attack after player has been in there for a while
 
 
 func _on_attack_range_area_exited(area):
@@ -97,6 +95,8 @@ func _on_animation_tree_animation_finished(anim_name):
 	if(anim_name == "attack_right"):
 		animTree["parameters/conditions/is_idle"] = true
 		animTree["parameters/conditions/is_attacking"] = false
-		state = IDLE
+		
+		if (player):
+			state = CHASE
 		
 		
