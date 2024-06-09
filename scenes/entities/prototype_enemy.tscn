@@ -296,9 +296,7 @@ INVINCIBLE = true
 [node name="AttackProp" type="Node" parent="."]
 script = ExtResource("5_y4lck")
 raw_damage = 10
-piercing = null
-high_guard_mult = null
-slash_mult = null
+base_kb = 150.0
 
 [node name="MeleeHitboxComponent" parent="." node_paths=PackedStringArray("attackProp", "ownHurtbox") instance=ExtResource("5_manaf")]
 position = Vector2(-1, -21)

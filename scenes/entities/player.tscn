@@ -283,7 +283,7 @@ y_sort_enabled = true
 texture = ExtResource("2_2t25g")
 hframes = 8
 vframes = 8
-frame = 42
+frame = 43
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 17)

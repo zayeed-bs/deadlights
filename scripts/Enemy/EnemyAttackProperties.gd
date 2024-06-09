@@ -5,3 +5,4 @@ class_name Attack
 @export var piercing := false
 @export var high_guard_mult := 1.2
 @export var slash_mult := 0.8
+@export var base_kb := 5.0

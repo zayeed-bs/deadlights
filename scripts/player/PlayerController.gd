@@ -3,10 +3,12 @@ extends CharacterBody2D
 @export var meleeComponent : MeleeHitboxComponent
 @export var SPEED := 150
 var dir : Vector2
-@onready var animTree := $AnimationTree
-
+var knockback := Vector2.ZERO
 var attack_float : float
 var in_lock_on_range := true
+@onready var animTree := $AnimationTree
+
+
 
 
 func _physics_process(delta):
@@ -25,12 +27,14 @@ func handleMovement():
 	dir = Vector2(xAxis, yAxis).normalized()
 	
 	# Calculate Velocity
-	velocity = dir * SPEED
+	velocity = dir * SPEED + knockback
 	move_and_slide()
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+
 
 
 func handleAnimation():
-	if velocity != Vector2.ZERO: # currently moving
+	if dir != Vector2.ZERO: # currently moving
 		animTree["parameters/conditions/is_running"] = true
 		animTree["parameters/conditions/is_idle"] = false
 		

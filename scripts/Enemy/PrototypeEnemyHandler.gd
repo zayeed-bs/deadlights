@@ -3,12 +3,14 @@ extends CharacterBody2D
 enum {
 	IDLE,
 	CHASE,
-	ATTACK
+	ATTACK,
+	AVOID
 }
 
 @export var SPEED := 50
 var player
 var state = IDLE
+var isAttacking = false
 var dir = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 
@@ -22,6 +24,7 @@ func _ready():
 	rng.randomize()
 
 func _physics_process(delta):
+	print(state)
 	match state:
 		IDLE:
 			idle()
@@ -55,38 +58,36 @@ func attack():
 	animTree["parameters/conditions/is_moving"] = false
 	animTree["parameters/conditions/is_idle"] = false
 	animTree["parameters/conditions/is_attacking"] = true
-	
+	isAttacking = true
 	velocity = Vector2.ZERO
 	move_and_slide()
 	
 	
 func _on_chase_range_area_entered(area):
 	# check if object in area is actually player
-	if(area != hurtBox && area is HurtboxComponent):
+	if(area != hurtBox && area is HurtboxComponent && !isAttacking):
 		player = area # attach player
 		state = CHASE # change state
 
-#
-#
-#func _on_chase_range_area_exited(area):
-	#if(area != hurtBox && area is HurtboxComponent):
-		#player = null # detach player
-		#state = IDLE # change state to idle
-#
+func _on_chase_range_area_exited(area):
+	if(area != hurtBox && area is HurtboxComponent && !isAttacking):
+		player = null # detach player
+		state = IDLE # change state to idle
+
 
 
 func _on_timer_timeout():
 	state = ATTACK # Replace with function body.
-
+	
 
 func _on_attack_range_area_entered(area):
-	if area == player:
+	if area == player  && !isAttacking:
 		state = IDLE
 		attackTimer.start(0.5) # change state to attack after player has been in there for a while
 
 
 func _on_attack_range_area_exited(area):
-	if area == player:
+	if area == player && !isAttacking:
 		state = CHASE
 		attackTimer.stop() # change state to attack after player has been in there for a while.
 
@@ -95,8 +96,8 @@ func _on_animation_tree_animation_finished(anim_name):
 	if(anim_name == "attack_right"):
 		animTree["parameters/conditions/is_idle"] = true
 		animTree["parameters/conditions/is_attacking"] = false
+		isAttacking = false
 		
 		if (player):
 			state = CHASE
-		
-		
+

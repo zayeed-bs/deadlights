@@ -15,4 +15,4 @@ func _process(delta):
 	
 func _on_area_entered(area): # If a Hurtbox has been found, damage that entity
 	if(area is HurtboxComponent and area != ownHurtbox):
-		area.damage(attackProp)
+		area.damage(attackProp, global_position)
