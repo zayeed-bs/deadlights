@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum {
+enum states{
 	IDLE,
 	CHASE,
 	ATTACK,
@@ -8,8 +8,9 @@ enum {
 }
 
 @export var SPEED := 50
+@export var stateLabel : Label
 var player
-var state = IDLE
+var state = states.IDLE
 var isAttacking = false
 var dir = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
@@ -18,19 +19,20 @@ var rng = RandomNumberGenerator.new()
 @onready var hurtBox = $HurtboxComponent
 @onready var animTree = $AnimationTree
 @onready var animPlayer = $AnimationPlayer
-@onready var debugLabel = $Label
+@onready var debugLabel = $Health
+@onready var atkRange = $AttackRange
+@onready var chaseRange = $ChaseRange
 
 func _ready():
 	rng.randomize()
 
 func _physics_process(delta):
-	print(state)
 	match state:
-		IDLE:
+		states.IDLE:
 			idle()
-		CHASE:
+		states.CHASE:
 			chase()
-		ATTACK:
+		states.ATTACK:
 			attack()
 	
 	animTree["parameters/Idle/blend_position"] = dir
@@ -43,12 +45,26 @@ func idle():
 	animTree["parameters/conditions/is_idle"] = true
 	animTree["parameters/conditions/is_moving"] = false
 	
+	if player != null:
+		if chaseRange.overlaps_area(player):
+			state = states.CHASE
+	
 
 func chase():
-	if player != null:
-		dir = global_position.direction_to(player.global_position).normalized()
-		velocity = dir * SPEED
-	move_and_slide()
+	print()
+	if atkRange.overlaps_area(player): # Check if player is still attackable
+		state = states.ATTACK
+	else:
+		if player != null:
+			dir = global_position.direction_to(player.global_position).normalized()
+			velocity = dir * SPEED
+			move_and_slide()
+			
+		animTree["parameters/conditions/is_idle"] = false
+		animTree["parameters/conditions/is_moving"] = true
+		animTree["parameters/conditions/is_attacking"] = false
+	
+
 
 
 func attack():
@@ -60,6 +76,7 @@ func attack():
 	animTree["parameters/conditions/is_attacking"] = true
 	isAttacking = true
 	velocity = Vector2.ZERO
+	
 	move_and_slide()
 	
 	
@@ -67,37 +84,23 @@ func _on_chase_range_area_entered(area):
 	# check if object in area is actually player
 	if(area != hurtBox && area is HurtboxComponent && !isAttacking):
 		player = area # attach player
-		state = CHASE # change state
+		state = states.CHASE # change state
 
 func _on_chase_range_area_exited(area):
 	if(area != hurtBox && area is HurtboxComponent && !isAttacking):
 		player = null # detach player
-		state = IDLE # change state to idle
+		state = states.IDLE # change state to idle
 
 
-
-func _on_timer_timeout():
-	state = ATTACK # Replace with function body.
-	
-
-func _on_attack_range_area_entered(area):
-	if area == player  && !isAttacking:
-		state = IDLE
-		attackTimer.start(0.5) # change state to attack after player has been in there for a while
-
-
-func _on_attack_range_area_exited(area):
-	if area == player && !isAttacking:
-		state = CHASE
-		attackTimer.stop() # change state to attack after player has been in there for a while.
-
+func _on_timer_timeout():	
+	if atkRange.overlaps_area(player): # Check if player is still attackable
+		state = states.ATTACK
+		
 
 func _on_animation_tree_animation_finished(anim_name):
 	if(anim_name == "attack_right"):
-		animTree["parameters/conditions/is_idle"] = true
 		animTree["parameters/conditions/is_attacking"] = false
 		isAttacking = false
-		
-		if (player):
-			state = CHASE
-
+	
+		state = states.IDLE
+		attackTimer.start(0.2)

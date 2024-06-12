@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://w3o0fx5xl05k"]
+[gd_scene load_steps=42 format=3 uid="uid://w3o0fx5xl05k"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_y0g7a"]
 [ext_resource type="Texture2D" uid="uid://c05rdis8bhow5" path="res://assets/sprites/characters/Walking.png" id="2_2t25g"]
@@ -271,6 +271,9 @@ size = Vector2(16.075, 7.49421)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t4dp"]
 size = Vector2(22, 41)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3uu57"]
+light_mode = 1
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("meleeComponent")]
 z_index = 1
 y_sort_enabled = true
@@ -283,7 +286,7 @@ y_sort_enabled = true
 texture = ExtResource("2_2t25g")
 hframes = 8
 vframes = 8
-frame = 43
+frame = 42
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 17)
@@ -330,22 +333,19 @@ disabled = true
 debug_color = Color(0.74902, 0.72549, 0, 0.419608)
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("4_i6dxs")]
+collision_layer = 2
+collision_mask = 2
 healthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_3t4dp")
 debug_color = Color(1, 0, 0, 0.0980392)
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = ExtResource("6_lqf0h")
+[node name="Control" type="CanvasLayer" parent="."]
 
 [node name="Health" type="Label" parent="Control"]
 z_index = 99
-layout_mode = 1
+material = SubResource("CanvasItemMaterial_3uu57")
 anchors_preset = -1
 anchor_left = -0.375
 anchor_right = 0.35
@@ -362,7 +362,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Mouse Button held down" type="Label" parent="Control"]
-layout_mode = 0
 offset_left = -20.0
 offset_top = -62.0
 offset_right = 20.0

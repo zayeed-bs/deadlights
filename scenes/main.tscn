@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://cgxl2o3r2mdo8"]
 
-[ext_resource type="Script" path="res://scenes/DayNightCycle.gd" id="1_8e8nh"]
+[ext_resource type="Script" path="res://scripts/DayNightCycle.gd" id="1_8e8nh"]
 [ext_resource type="Texture2D" uid="uid://bphcu6o3dkos5" path="res://assets/tilesets/wood_texture_1.1.png" id="1_j1e5h"]
 [ext_resource type="Theme" uid="uid://dviku8twa1nni" path="res://ui_theme.tres" id="1_ro65w"]
 [ext_resource type="PackedScene" uid="uid://w3o0fx5xl05k" path="res://scenes/entities/player.tscn" id="2_uo2xd"]
@@ -15,8 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://1k57isrv10v0" path="res://scenes/objects/lamp_post.tscn" id="12_056rr"]
 
 [sub_resource type="Gradient" id="Gradient_33qni"]
-offsets = PackedFloat32Array(0, 0.45, 0.5, 0.55, 1)
-colors = PackedColorArray(0.207843, 0.360784, 0.490196, 1, 0.423529, 0.356863, 0.482353, 1, 0.972549, 0.694118, 0.584314, 1, 0.752941, 0.423529, 0.517647, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.35, 0.4, 0.45, 0.6)
+colors = PackedColorArray(0.0567618, 0.0970507, 0.171944, 1, 0.207843, 0.360784, 0.490196, 1, 0.63, 0.3213, 0.480795, 1, 0.941176, 0.803922, 0.686275, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_ffr0e"]
 gradient = SubResource("Gradient_33qni")
@@ -123,9 +123,10 @@ fill_from = Vector2(0.47191, 0.496629)
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("timeLabel")]
 script = ExtResource("1_8e8nh")
 colorGradient = SubResource("GradientTexture1D_ffr0e")
+timeLabel = NodePath("CanvasLayer/Control/TIME")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasModulate"]
 
@@ -143,12 +144,19 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("1_ro65w")
 
-[node name="Label" type="Label" parent="CanvasModulate/CanvasLayer/Control"]
+[node name="FPS" type="Label" parent="CanvasModulate/CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = -2.0
 offset_right = 46.0
 offset_bottom = 21.0
+
+[node name="TIME" type="Label" parent="CanvasModulate/CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 30.0
+offset_right = 45.0
+offset_bottom = 49.0
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -170,7 +178,7 @@ SPEED = 100
 [node name="Game Manager" type="Node2D" parent="." node_paths=PackedStringArray("fpsLabel")]
 script = ExtResource("4_pn3vs")
 debug = true
-fpsLabel = NodePath("../CanvasModulate/CanvasLayer/Control/Label")
+fpsLabel = NodePath("../CanvasModulate/CanvasLayer/Control/FPS")
 
 [node name="Environment" type="Node2D" parent="."]
 y_sort_enabled = true
